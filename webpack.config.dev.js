@@ -21,7 +21,10 @@ export default {
     loaders: [
       {
         test: /\.jsx?$/,
-        include: path.join(__dirname, 'client'),
+        include: [
+          path.join(__dirname, 'client'),
+          path.join(__dirname, 'server/shared'),
+        ],
         loaders: 'babel',
         query: {
           presets: [ 'react' ]
