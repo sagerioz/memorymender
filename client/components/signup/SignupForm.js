@@ -4,6 +4,7 @@ import map from'lodash/map';
 import classnames from 'classnames';
 import validateInput from '../../../server/shared/validations/signup';
 import TextFieldGroup from '../common/TextFieldGroup';
+// import { browserHistory } from 'react-router';
 // import axios from 'axios
 
 
@@ -47,7 +48,10 @@ class SignupForm extends React.Component {
       // makes POST req to this route
       // axios.post('/api/users', { user: this.state });
       this.props.userSignupRequest(this.state).then(
-        () => {},
+        () => {
+        //  browserHistory.push
+        this.context.router.history.push('/');
+        },
         ({ data }) => this.setState({ errors: data, isLoading: false })
       );
       console.log(this.state);
@@ -125,5 +129,9 @@ class SignupForm extends React.Component {
 
 SignupForm.propTypes = {
   userSignupRequest: React.PropTypes.func.isRequired
+}
+
+SignupForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
 }
 export default SignupForm;
