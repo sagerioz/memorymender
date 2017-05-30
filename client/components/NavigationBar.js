@@ -8,7 +8,9 @@ export default () => {
     <nav className="navbar navbar-default">
       <div className="container-fluid">
         <div className="navbar-header">
-          <Link to="/" className="navbar-brand">MyReMINDR
+          <Link to="/" className="navbar-brand">Memoreable
+          </Link>
+          <Link to="/signup" className="navbar-brand">Signup
           </Link>
 
         </div>
