@@ -49,6 +49,10 @@ class SignupForm extends React.Component {
       // axios.post('/api/users', { user: this.state });
       this.props.userSignupRequest(this.state).then(
         () => {
+          this.props.addFlashMessage({
+            type: 'success',
+            text: 'You have signed up successfully!'
+          })
         //  browserHistory.push
         this.context.router.history.push('/');
         },
@@ -128,7 +132,8 @@ class SignupForm extends React.Component {
 }
 
 SignupForm.propTypes = {
-  userSignupRequest: React.PropTypes.func.isRequired
+  userSignupRequest: React.PropTypes.func.isRequired,
+  addFlashMessage: React.PropTypes.func.isRequired
 }
 
 SignupForm.contextTypes = {
