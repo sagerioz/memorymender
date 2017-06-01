@@ -1,14 +1,37 @@
 import express from 'express';
-import validateInput from '../shared/validations/signup';
+import commonValidations from '../shared/validations/signup';
 import bcrypt from 'bcrypt';
+import isEmpty from 'lodash/isEmpty';
 
 import User from '../models/user';
 
 let router = express.Router();
 
+function validateInput(data, otherValidations){
+  let { errors } = otherValidations(data);
+
+   return User.query({
+     where: { email: data.email },
+     orWhere: { username: data.username }
+   }).fetch().then(user => {
+     if (user) {
+       if (user.get('username') === data.username){
+         errors.username = "This username is already in use"
+       }
+       if (user.get('email') === data.email){
+         errors.email = "This email is already in use"
+       }
+     }
+     return {
+       errors,
+       isValid: isEmpty(errors)
+     };
+   })
+}
+
 router.post('/', (req, res) => {
  console.log("REQ BODY", req.body);
-  const { errors, isValid } = validateInput(req.body);
+ validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
 
   if(isValid){
     const { username, password, timezone, email } = req.body;
@@ -24,5 +47,5 @@ router.post('/', (req, res) => {
     res.status(400).json(errors);
   }
 });
-
+});
 export default router;
