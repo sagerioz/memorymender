@@ -2,7 +2,8 @@ import React from 'react';
 import TextFieldGroup from '../common/TextFieldGroup';
 import validateInput from '../../../server/shared/validations/login';
 import { connect } from 'react-redux';
-import { login } from '../../actions/login';
+import { login } from '../../actions/authActions';
+
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class LoginForm extends React.Component {
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
       this.props.login(this.state).then(
-        (res) => this.context.router.push('/'),
+        (res) => this.context.router.history.push('/'),
         (err) => this.setState({ errors: err.data.errors, isLoading: false })
       );
     }
