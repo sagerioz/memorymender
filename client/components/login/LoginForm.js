@@ -34,7 +34,9 @@ class LoginForm extends React.Component {
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
       this.props.login(this.state).then(
-        (res) => this.context.router.history.push('/'),
+        (res) =>
+        this.context.router.history.push('/'),
+        //having issues here, seems the data object is undefined.
         (err) => this.setState({ errors: err.data.errors, isLoading: false })
       );
     }
